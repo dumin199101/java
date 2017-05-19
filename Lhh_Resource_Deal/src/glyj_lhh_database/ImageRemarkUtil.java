@@ -261,14 +261,14 @@ public class ImageRemarkUtil {
     public static void main(String[] args) {
       
 //        testWaterMark();
-    	File srcFolder = new File("H:\\Goosuu\\LhhImg");
+    	File srcFolder = new File("J:\\Lhh\\Lhh_Book");
     	
     	batchAddWaterMark(srcFolder);
 
     }
 
     //批量生成水印
-    private static void batchAddWaterMark(File srcFolder) {
+    public static void batchAddWaterMark(File srcFolder) {
 		// TODO Auto-generated method stub
 		File[] fileArr  = srcFolder.listFiles();
 		for(File file : fileArr){
@@ -286,7 +286,6 @@ public class ImageRemarkUtil {
 		         // 给图片添加水印图片
 		         markImageByIcon(iconPath, srcImgPath, targetIconPath);
 		         System.out.println("给文件夹#"+srcFolder.getName()+"下的图片"+file.getName()+"添加水印图片结束...");
-	   			
 	   		 }
    	    }     	
 		    	
