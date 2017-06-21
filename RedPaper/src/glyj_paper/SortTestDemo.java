@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class SortTestDemo {
+	
+	 public static int index = 0;
 
 	public static void main(String[] args) {
-		File srcFolder = new File("J:\\报刊加工\\群众周刊\\01第一卷");
-//		sortFile(srcFolder);
-		sortFolder(srcFolder);
+		File srcFolder = new File("J:\\红色报刊资料库图片资源成品数据\\BL\\01\\12");
+		sortFile(srcFolder);
+//		sortFolder(srcFolder);
 	}
 
 	private static void sortFolder(File srcFolder) {
@@ -48,9 +50,28 @@ public class SortTestDemo {
 					
 					for(FileNameSort name : imgURList){
 						System.out.println(name);
+//						testBLRename(srcFolder, name);
 					}
 
 				}
+	}
+
+	private static void testBLRename(File srcFolder, FileNameSort name) {
+		SortTestDemo.index++;
+		File srcFile = new File(srcFolder, name.toString());
+		File destFile = new File(srcFolder,Integer.toString(SortTestDemo.index)+".jpg");
+		System.out.println(destFile.getAbsolutePath());
+		rename(srcFile,destFile);
+	}
+	
+	private static void rename(File srcFile, File destFile) {
+		// TODO Auto-generated method stub
+		if(srcFile.renameTo(destFile)){
+			System.out.println(srcFile.getAbsolutePath()+"重命名成功");
+		}else{
+			System.out.println(srcFile.getAbsolutePath()+"重命名失败");
+		}
+		
 	}
 	
 	

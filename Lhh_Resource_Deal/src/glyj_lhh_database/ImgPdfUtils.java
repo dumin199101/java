@@ -53,8 +53,12 @@ public class ImgPdfUtils {
 		//将多个jpg直接合并成pdf包
 //		ImgPdfUtils.imgMerageToPdf(new File("H:\\Goosuu\\LhhImg\\1\\img").listFiles(),new File("H:\\Goosuu\\PDF","1.pdf"));
 		
-		File srcFolder = new File("J:\\Lhh\\Lhh_Book");
-		batchTransferImgToPdf(srcFolder);
+		//批量将多个jpg合成pdf包
+//		File srcFolder = new File("J:\\Lhh\\Lhh_Book");
+//		batchTransferImgToPdf(srcFolder);
+		
+		
+		
 	}
 	
 	
