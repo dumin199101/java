@@ -2,8 +2,10 @@ package glyj_pdfbox;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -44,15 +46,16 @@ public class PDFBoxTest {
 //    	insertImgToPDF();
 //    	splitPDF();
 //      mergePDF();
-                getImageFromPDF();
+//                getImageFromPDF();
 	}
+    
 
     /**
      * 从PDF文件中提取图片
      * @throws InvalidPasswordException
      * @throws IOException
      */
-	private static void getImageFromPDF() throws InvalidPasswordException,
+	public static void getImageFromPDF() throws InvalidPasswordException,
 			IOException {
 		//第1步：加载现有PDF文件
 		File file = new File("D:\\Mytest\\Output\\ExtractPDF\\3\\1.pdf"); 
@@ -74,7 +77,7 @@ public class PDFBoxTest {
      * @throws IOException
      * @throws FileNotFoundException
      */
-	private static void mergePDF() throws InvalidPasswordException,
+	public static void mergePDF() throws InvalidPasswordException,
 			IOException, FileNotFoundException {
 		//    	第1步：加载现有PDF文件
 		    	File file1 = new File("D:\\Mytest\\Input\\2.pdf"); 
@@ -101,9 +104,9 @@ public class PDFBoxTest {
      * @throws InvalidPasswordException
      * @throws IOException
      */
-	private static void splitPDF() throws InvalidPasswordException, IOException {
+	public static void splitPDF() throws InvalidPasswordException, IOException {
 		//第1步：加载现有PDF文件
-    	File file = new File("D:\\Mytest\\Input\\喀什噶尔_2.pdf");
+    	File file = new File("D:\\Mytest\\Input\\南疆勘界日记图说-R_PS_Merge.pdf");
     	PDDocument document = PDDocument.load(file);
     	//步骤2：实例化分配器类
     	Splitter splitter = new Splitter();
@@ -114,7 +117,7 @@ public class PDFBoxTest {
     	int i = 1;
         while(iterator.hasNext() ) {
            PDDocument pd = iterator.next() ;
-           pd.save("D:\\Mytest\\Output\\ExtractPDF\\3\\"+ i++ +".pdf") ;
+           pd.save("D:\\Mytest\\Output\\ExtractPDF\\4\\"+ i++ +".pdf") ;
         }
         System.out.println("Multiple PDF’s created") ;
         //关闭文档
@@ -127,7 +130,7 @@ public class PDFBoxTest {
      * 插入图像到PDF文件
      * @throws IOException
      */
-	private static void insertImgToPDF() throws IOException {
+	public static void insertImgToPDF() throws IOException {
 		//1.创建PDF文档
     	PDDocument document = new PDDocument();
     	//2.添加空白页
@@ -156,10 +159,10 @@ public class PDFBoxTest {
      * @throws InvalidPasswordException
      * @throws IOException
      */
-	private static void getTextFromPDF() throws InvalidPasswordException,
+	public static void getTextFromPDF() throws InvalidPasswordException,
 			IOException {
 		//1.加载现有的PDF文档
-    	File file = new File("D:\\Mytest\\Output\\CreatePDF\\传奇大将陈赓.pdf");
+    	File file = new File("D:\\Mytest\\Output\\ExtractPDF\\西域补志-R\\40.pdf");
     	PDDocument document = PDDocument.load(file);
     	//2.实例化PDFTextStripper类
     	PDFTextStripper pdfTextStripper = new PDFTextStripper();
@@ -175,7 +178,7 @@ public class PDFBoxTest {
      *  添加多行到PDF文档
      * @throws IOException
      */
-	private static void addMultiLineToPDF() throws IOException {
+	public static void addMultiLineToPDF() throws IOException {
 		//1.创建PDF文档
     	PDDocument document = new PDDocument();
     	//2.添加空白页
@@ -212,7 +215,7 @@ public class PDFBoxTest {
 
     
     //向PDF中插入文本
-	private static void addContentToPDF() throws IOException {
+	public static void addContentToPDF() throws IOException {
 		//1.创建PDF文档
     	PDDocument document = new PDDocument();
     	//2.添加空白页
@@ -247,7 +250,7 @@ public class PDFBoxTest {
      * @throws InvalidPasswordException
      * @throws IOException
      */
-	private static void getPDFInformation() throws InvalidPasswordException,
+	public static void getPDFInformation() throws InvalidPasswordException,
 			IOException {
 		//1.加载已有文档
     	File file = new File("D:\\Mytest\\Output\\CreatePDF\\传奇大将陈赓_2.pdf");
@@ -276,7 +279,7 @@ public class PDFBoxTest {
      * @throws IOException
      * @throws ParseException
      */
-	private static void setPDFInformation() throws InvalidPasswordException,
+	public static void setPDFInformation() throws InvalidPasswordException,
 			IOException, ParseException {
 		//1.加载已有文档
     	File file = new File("D:\\Mytest\\Output\\CreatePDF\\传奇大将陈赓.pdf");
@@ -303,7 +306,7 @@ public class PDFBoxTest {
 
 
     //删除PDF中的页
-	private static void deletePDFPage() throws InvalidPasswordException,
+	public static void deletePDFPage() throws InvalidPasswordException,
 			IOException {
 		//第1步：加载现有PDF文件
     	File file = new File("D:\\Mytest\\Output\\CreatePDF\\传奇大将陈赓.pdf");
@@ -325,7 +328,7 @@ public class PDFBoxTest {
      * @throws InvalidPasswordException
      * @throws IOException
      */
-	private static void loadPDF() throws InvalidPasswordException, IOException {
+	public static void loadPDF() throws InvalidPasswordException, IOException {
 		//第1步：加载现有PDF文件
     	File file = new File("D:\\Mytest\\Input\\传奇大将陈赓.pdf"); 
     	PDDocument document = PDDocument .load(file);
@@ -340,7 +343,7 @@ public class PDFBoxTest {
      * 添加空白页到PDF文件
      * @throws IOException
      */
-	private static void addPageToPDF() throws IOException {
+	public static void addPageToPDF() throws IOException {
 		//步骤1：创建一个空文件
     	PDDocument document = new PDDocument();
     	//第2步：创建一个空白页
@@ -358,7 +361,7 @@ public class PDFBoxTest {
      * 创建PDF文档
      * @throws IOException
      */
-	private static void createPDF() throws IOException {
+	public static void createPDF() throws IOException {
 
     	 //步骤1：创建一个空文件:所述PDDocument属于包类org.apache.pdfbox.pdmodel ，是PDFDocument的内存中表示
     	 PDDocument document = new PDDocument() ;

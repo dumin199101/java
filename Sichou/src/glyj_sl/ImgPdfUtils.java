@@ -20,11 +20,9 @@ import com.lowagie.text.pdf.PdfCopy;
 import com.lowagie.text.pdf.PdfImportedPage;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfWriter;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
-
+import glyj_pdfbox.PDFBoxUtils;
 /**
  * 
  * @author lieyan
@@ -35,14 +33,32 @@ import com.sun.pdfview.PDFPage;
 @SuppressWarnings("unused")
 public class ImgPdfUtils {
 	public static void main(String[] args) throws Exception {
+		//遍历目录拆分pdf文件：
+//		File srcDir = new File("J:\\新疆丝绸之路西域史料文献辑要数据库加工数据\\成本PDF\\古代卷(241)");
+//		scanPdfExtraction(srcDir);
 		// 1.从整个pdf中拆分成单个pdf
-//		 pdfExtraction("D:\\Mytest\\Input\\2.pdf","D:\\Mytest\\Output\\ExtractPDF\\2");
+//		 pdfExtraction("J:\\新疆丝绸之路西域史料文献辑要数据库加工数据\\成本PDF\\古代卷(241)\\003新疆国界图志1.pdf","J:\\新疆丝绸之路西域史料文献辑要数据库加工数据\\拆分每本PDF\\003新疆国界图志1");
 		// 2.从单个pdf转成单个jpg
-	    File srcPdfDir = new File("D:\\Mytest\\Output\\ExtractPDF\\2");
-		File dest = new File("D:\\Mytest\\Output\\PDFToJPG\\2-2");
-		scanPdfLists(srcPdfDir, dest);
-//		pdfToJpg("D:\\Mytest\\Input\\喀什噶尔_2.pdf","D:\\Mytest\\Output\\PDFToJPG\\10.jpg",10);
-//		System.out.println("over");
+//	    File srcPdfDir = new File("J:\\新疆丝绸之路西域史料文献辑要数据库加工数据\\拆分每本PDF");
+//		File dest = new File("J:\\新疆丝绸之路西域史料文献辑要数据库加工数据\\Resource_Img");
+//		scanPdfLists(srcPdfDir, dest);
+		//3.从单个PDF中提取文本：
+//		PDFBoxUtils.getTextFromPDF("D:\\001ADAEB-FA7C-4D40-AD01-D0FBD3313A76.pdf");
+		PDFBoxUtils.extractImageFromPDF("D:\\资源处理\\Input\\015钦定皇舆西域图志5.pdf","D:\\资源处理\\Output");
+		
+	}
+
+	private static void scanPdfExtraction(File srcDir) throws Exception {
+		// TODO Auto-generated method stub
+		File[] fileArr = srcDir.listFiles();
+		if(fileArr!=null){
+              for(File file : fileArr){
+            	  if(file.getName().endsWith(".pdf")&&file.isFile()){
+            			 pdfExtraction(srcDir.getAbsolutePath()+"\\"+file.getName(),"J:\\新疆丝绸之路西域史料文献辑要数据库加工数据\\拆分每本PDF\\"+file.getName().replaceAll(".pdf",""));
+            			 System.out.println(file.getName()+"文件拆分完毕");
+            	  }
+              }
+		}
 	}
 
 	private static void scanPdfLists(File srcPdfDir, File dest) {
@@ -50,15 +66,20 @@ public class ImgPdfUtils {
 			dest.mkdirs();
 		// TODO Auto-generated method stub
 		File[] fileArr = srcPdfDir.listFiles();
-		for (File file : fileArr) {
-			try {
-				pdfToJpg(srcPdfDir.getAbsolutePath() + "\\" + file.getName(),
-						dest.getAbsolutePath() + "\\"
-								+ file.getName().replaceAll("pdf", "jpg"), 1);
-				System.out.println(file.getName()+"transfered success");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(fileArr!=null){
+			for (File file : fileArr) {
+				if(file.isDirectory()){
+				      scanPdfLists(file, new File(dest,file.getName()));	
+				}else{
+					try {
+						PDFBoxUtils.getImageFromPDF(srcPdfDir.getAbsolutePath() + "\\" + file.getName(), dest.getAbsolutePath() + "\\"
+									+ file.getName().replaceAll("pdf", "jpg"));
+						System.out.println(srcPdfDir.getAbsolutePath() + "\\" +file.getName()+"transfered success");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}
@@ -99,46 +120,6 @@ public class ImgPdfUtils {
 		pr.close();
 	}
 
-	/**
-	 * @param source
-	 *            源文件
-	 * @param target
-	 *            目标文件
-	 * @param x
-	 *            读取源文件中的第几页
-	 */
-	private static void pdfToJpg(String source, String target, int x)
-			throws Exception {
-		// 创建从中读取和向其中写入（可选）的随机访问文件流，R表示对其只是访问模式
-		RandomAccessFile rea = new RandomAccessFile(new File(source), "r");
-
-		// 将流读取到内存中，然后还映射一个PDF对象
-		FileChannel channel = rea.getChannel();
-		ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0,
-				channel.size());
-		PDFFile pdfFile = new PDFFile(buf);
-		PDFPage page = pdfFile.getPage(x);
-
-		// get the width and height for the doc at the default zoom
-		java.awt.Rectangle rect = new java.awt.Rectangle(0, 0, (int) page
-				.getBBox().getWidth(), (int) page.getBBox().getHeight());
-
-		// generate the image
-		java.awt.Image img = page.getImage(rect.width, rect.height, // width &
-				rect, // clip rect
-				null, // null for the ImageObserver
-				true, // fill background with white
-				true // block until drawing is done
-				);
-
-		BufferedImage tag = new BufferedImage(rect.width, rect.height,
-				BufferedImage.TYPE_INT_RGB);
-
-		tag.getGraphics().drawImage(img, 0, 0, rect.width, rect.height, null);
-		FileOutputStream out = new FileOutputStream(target); // 输出到文件流
-		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-		encoder.encode(tag); // JPEG编码
-		out.close();
-	}
+	
 
 }
