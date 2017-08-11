@@ -1,0 +1,46 @@
+package wordtopdf;
+
+import com.jacob.activeX.ActiveXComponent;
+import com.jacob.com.ComThread;
+import com.jacob.com.Dispatch;
+import com.jacob.com.Variant;
+
+/**
+ * 转换doc文件到docx文件
+ * 
+ * @author dd
+ *
+ */
+public class DoctoDocxUtils {
+
+	public static void doc2docx(String srcFilePath, String destFilePath) throws Exception {
+		ActiveXComponent app = null;
+		try {
+			ComThread.InitSTA();
+			// 启动word程序
+			app = new ActiveXComponent("Word.Application");
+			// 设置word不可见
+			app.setProperty("Visible", false);
+			Dispatch docs = app.getProperty("Documents").toDispatch();
+			// 打开输入的word文档
+			Object doc = Dispatch
+					.invoke((Dispatch) docs, "Open", Dispatch.Method,
+							new Object[] { srcFilePath, new Variant(false), new Variant(true) }, new int[1])
+					.toDispatch();
+			
+			//另存文件, 其中Variant(n)参数指定另存为的文件类型，详见代码结束后的文字
+			Dispatch.invoke((Dispatch) doc,"SaveAs", Dispatch.Method, new Object[]{destFilePath,new Variant(16)}, new int[1]); 
+
+			//这句也不懂
+			Variant f = new Variant(false);
+			//关闭并退出
+			Dispatch.call((Dispatch) doc, "Close", f);
+			app.invoke("Quit", new Variant[] {});
+			System.out.println("转换完毕。"); 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+}

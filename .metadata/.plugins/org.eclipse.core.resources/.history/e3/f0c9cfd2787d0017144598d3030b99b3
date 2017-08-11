@@ -1,0 +1,24 @@
+package deal_word_test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.poi.hwpf.extractor.WordExtractor;
+
+/**
+ * 格式化Word文档
+ * 
+ * @author dd 参考手册：https://www.w3cschool.cn/apache_poi_word/
+ */
+public class FormatWord {
+	public static void main(String[] args) throws IOException {
+		// word 2003： 图片不会被读取
+		InputStream is = new FileInputStream(
+				new File("E:\\lieyan\\公司相关\\党史\\测试\\Documents\\Output Files\\007中华人民共和国中央人民政府公告.doc"));
+		WordExtractor ex = new WordExtractor(is);
+		String text2003 = ex.getText();
+		System.out.println(text2003);
+	}
+}

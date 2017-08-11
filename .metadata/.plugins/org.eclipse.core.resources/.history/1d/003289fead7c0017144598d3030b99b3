@@ -1,0 +1,29 @@
+package deal_word_test;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
+public class WordTemplate {
+    public static void main(String[] args) throws IOException{
+    	
+    	Map<String, String> map = new HashMap<String, String>();  
+        map.put("${content}", "湖南大学");  
+        String srcPath = "E:\\lieyan\\公司相关\\党史\\测试\\Template.docx";  
+        InputStream is = new FileInputStream(srcPath);
+        XWPFDocument doc = new XWPFDocument(is);
+        OutputStream os = new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\write.docx");
+        doc.write(os);
+        os.close();
+        is.close();
+        
+	}
+    
+    
+}

@@ -1,0 +1,16 @@
+package deal_word_test;
+
+
+
+/**
+ * ²ð·ÖWordÊý¾Ý
+ * 
+ * @author dd
+ *
+ */
+public class ExtractWordTest {
+	public static void main(String[] args) {
+        
+		
+	}
+}

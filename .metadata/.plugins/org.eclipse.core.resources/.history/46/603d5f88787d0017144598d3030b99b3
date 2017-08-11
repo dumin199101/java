@@ -1,0 +1,11 @@
+package deal_word_test;
+/**
+ * 格式化Word文档
+ * @author dd
+ * 参考手册：https://www.w3cschool.cn/apache_poi_word/
+ */
+public class FormatWord {
+   public static void main(String[] args) {
+	  
+   }
+}

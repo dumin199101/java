@@ -1,0 +1,21 @@
+1502086881781	Rename compilation unit 'Test.java'
+1502087015668	Delete element
+1502158292490	Extract method 'createPDF'
+1502158651837	Extract method 'setPDFAttribute'
+1502158992822	Extract method 'addImage'
+1502159090288	Extract method 'createTable'
+1502162580758	Extract method 'stylingPDFText'
+1502162792878	Extract method 'modifyPDFContent'
+1502163590148	Extract method 'addPDFContent'
+1502164844411	Delete element
+1502164881905	Delete element
+1502164953885	Delete element
+1502165071867	Extract method 'cnSupport'
+1502172224897	Extract method 'createBlankWordDocument'
+1502175117815	Extract method 'writeInfoToDocument'
+1502242639175	Delete element
+1502329611001	Delete element
+1502335853082	Rename type 'ExtractWordUtils'
+1502336916402	Rename type 'WordtoPdfUtils'
+1502337027477	Rename type 'WordtoPDF'
+1502415061865	Rename type 'DocxtoPDF'

@@ -1,0 +1,16 @@
+package deal_txt_test;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+/**
+ * 拆分Txt文档
+ * 
+ * @author dd
+ *
+ */
+public class ExtractTxtTest {
+	public static void main(String[] args) {
+	   BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("E:\\lieyan\\公司相关\\党史\\测试\\第1册.txt"), "GB2312"));
+   }
+}

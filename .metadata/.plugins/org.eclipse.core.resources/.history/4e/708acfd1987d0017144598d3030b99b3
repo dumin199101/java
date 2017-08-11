@@ -1,0 +1,279 @@
+package deal_word_test;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Date;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Section;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
+
+/**
+ * 通过TXT文件生成PDF文件
+ * 
+ * @author dd
+ *
+ */
+public class TxtToPDF {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// createPDF();
+		// setPDFAttribute();
+		// addImage();
+		// createTable();
+		// stylingPDFText();
+		// modifyPDFContent();
+		// addPDFContent();
+		 cnSupport();
+	}
+
+	private static void cnSupport() {
+		try {
+			Document doc = new Document();
+			PdfWriter.getInstance(doc, new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\中文处理_1.pdf"));
+			doc.open();
+//			BaseFont bfChinese = BaseFont.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
+			BaseFont bfChinese = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H", BaseFont.EMBEDDED);
+			// Font fontChinese = new
+			// Font(bfChinese,12,Font.NORMAL,Color.GREEN);
+			Font fontChinese = new Font(bfChinese, 10, Font.NORMAL, BaseColor.BLACK);
+
+			Paragraph pf = new Paragraph();
+			pf.add(new Paragraph("  我很高兴地接受贵大使呈递的缅甸联邦总统国书，并感谢祝贺。", fontChinese));
+			pf.add(new Paragraph(
+					"  中缅两国，境毗连不但在 历史、文化上有着密切的关系而且人民间更存着兄弟般的深厚友谊。近世纪来，中缅两国人民都曾为自己族独立和由进行长期而勇敢的斗争。因此，存在于贵我两国人民间同情与了解也是很深切现中缅新的外交关系建立，无疑将使已存在于两国人民间友谊更加发展我并相信其有助亚洲及世界的持久和平。",
+					fontChinese));
+			pf.add(new Paragraph("  我热烈地 欢迎阁下出任缅甸联邦驻中华人民共和国首特命全权大使，并愿对贵加 强两国合作的工，予以协助。",fontChinese));
+			pf.add(new Paragraph("  谨祝贵国家繁荣，人民兴旺并元首健康。", fontChinese));
+			pf.add(new Paragraph("  根据一九五 ○年八月日《人民报》刊印。",fontChinese));
+			doc.add(pf);
+			doc.close();
+			System.out.println("over...");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void addPDFContent() {
+		Document document = new Document();
+		try {
+			PdfWriter.getInstance(document, new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\addContent.pdf"));
+			document.open();
+			document.add(new Paragraph("howtodoinjava.com"));
+			document.add(new Paragraph(new Date().toString()));
+			// Add more content here
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			document.close();
+		}
+	}
+
+	private static void modifyPDFContent() {
+		try {
+			// Read file using PdfReader
+			PdfReader pdfReader = new PdfReader("E:\\lieyan\\公司相关\\党史\\测试\\1.pdf");
+
+			// Modify file using PdfReader
+			PdfStamper pdfStamper = new PdfStamper(pdfReader,
+					new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\HelloWorld-modified.pdf"));
+
+			Image image = Image.getInstance("E:\\lieyan\\公司相关\\党史\\测试\\show.png");
+			image.scaleAbsolute(100, 50);
+			image.setAbsolutePosition(100f, 700f);
+
+			for (int i = 1; i <= pdfReader.getNumberOfPages(); i++) {
+				PdfContentByte content = pdfStamper.getUnderContent(i);
+				content.addImage(image);
+			}
+
+			pdfStamper.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void stylingPDFText() {
+		Font blueFont = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL, new CMYKColor(255, 0, 0, 0));
+		Font redFont = FontFactory.getFont(FontFactory.COURIER, 12, Font.BOLD, new CMYKColor(0, 255, 0, 0));
+		Font yellowFont = FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD, new CMYKColor(0, 0, 255, 0));
+		Document document = new Document();
+		try {
+			PdfWriter writer = PdfWriter.getInstance(document,
+					new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\StylingExample.pdf"));
+			document.open();
+			// document.add(new Paragraph("Styling Example"));
+
+			// Paragraph with color and font styles
+			Paragraph paragraphOne = new Paragraph("Some colored paragraph text", redFont);
+			document.add(paragraphOne);
+
+			// Create chapter and sections
+			Paragraph chapterTitle = new Paragraph("Chapter Title", yellowFont);
+			Chapter chapter1 = new Chapter(chapterTitle, 1);
+			chapter1.setNumberDepth(0);
+
+			Paragraph sectionTitle = new Paragraph("Section Title", redFont);
+			Section section1 = chapter1.addSection(sectionTitle);
+
+			Paragraph sectionContent = new Paragraph("Section Text content", blueFont);
+			section1.add(sectionContent);
+
+			document.add(chapter1);
+
+			document.close();
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void createTable() {
+		Document document = new Document();
+		try {
+			PdfWriter writer = PdfWriter.getInstance(document,
+					new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\AddTableExample.pdf"));
+			document.open();
+
+			PdfPTable table = new PdfPTable(3); // 3 columns.
+			table.setWidthPercentage(100); // Width 100%
+			table.setSpacingBefore(10f); // Space before table
+			table.setSpacingAfter(10f); // Space after table
+
+			// Set Column widths
+			float[] columnWidths = { 1f, 1f, 1f };
+			table.setWidths(columnWidths);
+
+			PdfPCell cell1 = new PdfPCell(new Paragraph("Cell 1"));
+			cell1.setBorderColor(BaseColor.BLUE);
+			cell1.setPaddingLeft(10);
+			cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+			PdfPCell cell2 = new PdfPCell(new Paragraph("Cell 2"));
+			cell2.setBorderColor(BaseColor.GREEN);
+			cell2.setPaddingLeft(10);
+			cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell2.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+			PdfPCell cell3 = new PdfPCell(new Paragraph("Cell 3"));
+			cell3.setBorderColor(BaseColor.RED);
+			cell3.setPaddingLeft(10);
+			cell3.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell3.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+			// To avoid having the cell border and the content overlap, if you
+			// are having thick cell borders
+			// cell1.setUserBorderPadding(true);
+			// cell2.setUserBorderPadding(true);
+			// cell3.setUserBorderPadding(true);
+
+			table.addCell(cell1);
+			table.addCell(cell2);
+			table.addCell(cell3);
+
+			document.add(table);
+
+			document.close();
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void addImage() {
+		Document document = new Document();
+		try {
+			PdfWriter writer = PdfWriter.getInstance(document,
+					new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\AddImageExample.pdf"));
+			document.open();
+			document.add(new Paragraph("Image Example"));
+
+			// Add Image
+			Image image1 = Image.getInstance("E:\\lieyan\\公司相关\\党史\\测试\\show.png");
+			// Fixed Positioning
+			image1.setAbsolutePosition(100f, 550f);
+			// Scale to new height and new width of image
+			image1.scaleAbsolute(200, 200);
+			// Add to document
+			document.add(image1);
+
+			String imageUrl = "http://www.eclipse.org/xtend/images/java8_logo.png";
+			Image image2 = Image.getInstance(new URL(imageUrl));
+			document.add(image2);
+
+			document.close();
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void setPDFAttribute() {
+		Document document = new Document();
+		try {
+			PdfWriter writer = PdfWriter.getInstance(document,
+					new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\SetAttributeExample.pdf"));
+			document.open();
+			document.add(new Paragraph("Some content here"));
+
+			// Set attributes here
+			document.addAuthor("Lokesh Gupta");
+			document.addCreationDate();
+			document.addCreator("HowToDoInJava.com");
+			document.addTitle("Set Attribute Example");
+			document.addSubject("An example to show how attributes can be added to pdf files.");
+
+			document.close();
+			writer.close();
+			System.out.println("over");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void createPDF() {
+		Document document = new Document();
+		try {
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("E:\\lieyan\\公司相关\\党史\\测试\\生成PDF.pdf"));
+			document.open();
+			
+			//对文本做换行处理
+			String[] contents = content.split("\n");
+			document.add(new Paragraph("A Hello World PDF document."));
+			document.close();
+			writer.close();
+			System.out.println("Over...");
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

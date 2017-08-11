@@ -1,0 +1,7 @@
+package deal_word_test;
+
+public class FontStyle {
+	public static void main(String[] args) {
+
+	}
+}

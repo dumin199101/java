@@ -1,0 +1,37 @@
+package gljy_sichou;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class CreateID {
+  public static void main(String[] args) throws IOException{
+	 BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("E:\\lieyan\\公司相关\\txt\\未复核\\1947年新华日报.txt"), "UTF-8"));
+	 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("E:\\lieyan\\公司相关\\txt\\1947年新华日报_guid.txt"),"UTF-8"));
+//	 BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("E:\\lieyan\\公司相关\\txt\\1946年新华日报_Error.txt"),"UTF-8"));
+	 String line = null;
+	 while((line = br.readLine())!= null){
+		 String[] info = line.split("\t");
+		     //长度==4，月份、日期不能为空，版必须是数字，长度<=2,月中不含有@跟⑬
+			 if(info.length==4&&!info[1].equals("")&&!info[2].equals("")&&info[3].length()<=2&&info[3].matches("\\d")&&!info[1].equals("⑬")&&!info[1].equals("@")){
+				String result = info[0]+"\t"+"XH1947"+String.format("%02d", Integer.parseInt(info[1]))+String.format("%02d", Integer.parseInt(info[2]))+String.format("%02d", Integer.parseInt(info[3]));
+//				bw.write(result);
+//				bw.newLine();
+//				bw.flush();
+				System.out.println(result);
+			 }else{
+//				bw2.write(line);
+//				bw2.newLine();
+//				bw2.flush();
+			 }
+	 }
+	 br.close();
+	 bw.close();
+//	 bw2.close();
+	 System.out.println("Data Created Successfully");
+  }
+}

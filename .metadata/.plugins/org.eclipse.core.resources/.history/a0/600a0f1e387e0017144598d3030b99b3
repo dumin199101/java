@@ -1,0 +1,9 @@
+package wordtopdf;
+/**
+ * 转换doc文件到docx文件
+ * @author dd
+ *
+ */
+public class DoctoDocxUtils {
+
+}

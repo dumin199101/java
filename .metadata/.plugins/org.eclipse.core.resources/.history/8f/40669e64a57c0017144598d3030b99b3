@@ -1,0 +1,42 @@
+package extract_word;
+
+import java.io.File;
+import java.io.FileInputStream;
+
+import org.textmining.text.extraction.WordExtractor;
+
+/**
+ * Referer:http://blog.sina.com.cn/s/blog_87df085f0102w17v.html
+ * @author dd
+ *
+ */
+public class POIWordUtil {
+    public static void main(String[] args) {
+    	 testReadDoc();
+	}
+
+	private static void testReadDoc() {
+		try{
+             String text = POIWordUtil.readDoc("E:\\lieyan\\公司相关\\党史\\测试\\毛文稿第一册（1949－1950）.doc");
+             System.out.println(text);
+          }catch(Exception e){
+              e.printStackTrace();
+          }
+	}
+    
+    public static String readDoc(String doc) throws Exception {
+        // 创建输入流读取DOC文件
+         FileInputStream in = new FileInputStream(new File(doc));
+         WordExtractor extractor = null;
+         String text = null;
+        // 创建WordExtractor
+         extractor = new WordExtractor();
+        // 对DOC文件进行提取
+         text = extractor.extractText(in);
+        return text;
+    }
+    
+}
+
+
+

@@ -1,0 +1,52 @@
+package wordtopdf;
+
+import java.io.File;
+
+/**
+ * 主程序： 1.拆分word文档为word文件 WordExtractUtils 2.格式化doc文档 WordTemplateUtils
+ * 3.利用工具将word文件转化为doc文档 工具 4.转化doc文档为pdf文档 WordToPDFUtils
+ * 
+ * @author dd
+ * @time 2017-08-10
+ *
+ */
+public class MainProcedure {
+	public static void main(String[] args) {
+	/*	File srcFolder = new File("E:\\lieyan\\公司相关\\党史\\生产\\Doc");
+		deleteFolder(srcFolder);*/
+		
+		// 1.拆分word文档为word文件 WordExtractUtils
+		// File("E:\\lieyan\\公司相关\\党史\\生产\\Source\\毛文稿第一册（1949－1950）.doc");
+		// File destFolder = new File("E:\\lieyan\\公司相关\\党史\\生产\\Doc");
+		// WordExtractUtils.extractWord2003(srcFile, destFolder);
+		
+		//2.转化doc文档为pdf文档 WordToPDFUtils
+		File srcFolder = new File("E:\\lieyan\\公司相关\\党史\\生产\\Docs\\建国以来毛泽东文稿（1）\\Output Files");
+		File destFolder = new File("E:\\lieyan\\公司相关\\党史\\生产\\Pdf");
+		File[] fileArr = srcFolder.listFiles();
+		for(File file : fileArr){
+			try {
+				WordtoPDFUtils.doc2pdf(srcFolder.getAbsolutePath()+"\\"+file.getName(),destFolder.getAbsolutePath()+"\\"+file.getName());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	
+	/*递归删除文件夹*/
+	private static void deleteFolder(File srcFolder) {
+		// TODO Auto-generated method stub
+        File[] fileArr = srcFolder.listFiles();
+        for(File file : fileArr){
+        	if(file.isDirectory()){
+        		deleteFolder(file);
+        	}else{
+        		file.delete();
+        	}
+        }
+        srcFolder.delete();
+	}
+}

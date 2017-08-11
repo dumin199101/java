@@ -1,0 +1,10 @@
+package deal_word_test;
+
+public class POIWordUtil {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
